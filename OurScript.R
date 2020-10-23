@@ -111,24 +111,6 @@ soccer_data %>%
 
 
 
-smallData <- data %>%  
-  select(club, leagueCountry, goals, victories, defeats, redCards, yellowCards, ties) 
-
-smallData %>% 
-  select(goals, victories, defeats, redCards, yellowCards, ties) %>% 
-  vis_cor()
-
-smallData %>% 
-  group_by(leagueCountry) %>% 
-  summarize(n = n(),
-            across(.cols = redCards,
-                   .fns = lst(mean, sd)))
-
-## EDA 
-
-
-
-
 
 
 
