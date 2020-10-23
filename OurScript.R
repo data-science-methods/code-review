@@ -133,7 +133,7 @@ Tot_Crd <- soccer_data %>%
   ungroup
 
 Tot_Crd
-#' With the surprise the Spanish league gave out the highest numbers of cards
+#' With no the surprise the Spanish league gave out the highest numbers of cards
 
 
 ## Other type of analysis (incomplete) ----
