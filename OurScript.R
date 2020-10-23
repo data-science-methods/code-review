@@ -152,20 +152,42 @@ TukeyHSD(res.aov)
 #' This is consistent with conventional beliefs about the soccer cultures in Spain and France.
 
 
-## Other type of analysis (incomplete) ----
-soccer_data %>% 
-  select(meanIAT,meanExp) %>% 
-  vis_cor()
+## Other types of analysis----
 
-
+# Number of player in the different leagues that have been identified as mostly dark-skinned by both raters
 soccer_data %>% 
+  group_by(leagueCountry) %>% 
   filter(rater1 > .5 & rater2 > .5) %>% 
-  select(meanIAT,meanExp, redCards, yellowCards) %>% 
-  vis_cor()
+  count() %>% 
+  ungroup
+
   
-  count(leagueCountry) 
+# Number of player in the different leagues that have been identified as mostly light-skinned by both raters  
+  
+soccer_data %>% 
+  group_by(leagueCountry) %>% 
+  filter(rater1 <= .5 & rater2 <= .5) %>% 
+  count() %>% 
+  ungroup
 
-
+# Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters    
+ 
+  soccer_data %>% 
+    group_by(leagueCountry) %>% 
+    filter(rater1 > .5 & rater2 > .5) %>% 
+    summarize(total_card = sum(redCards)) %>% 
+    ungroup   
+ 
+# Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters  
+  
+  soccer_data %>% 
+    group_by(leagueCountry) %>% 
+    filter(rater1 <= .5 & rater2 <= .5) %>% 
+    summarize(total_card = sum(redCards)) %>% 
+    ungroup
+  
+#' From these is seems that light skinned and dark-skinned player are affected similarly by red cards (i.e. in 
+#' identical proportion)
 
 
 
