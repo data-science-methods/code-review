@@ -40,8 +40,32 @@ with(dataf, cor(rater_mean, redCards))
 ggplot(dataf) + 
   geom_bar(aes(x = rater_mean))
 
-#
+#summarize
+summaryf = dataf %>% 
+  group_by(rater_mean) %>% 
+  summarize(
+    red_card_ratio = mean(redCards),
+    yellow_card_ratio = mean(yellowCards)) %>% 
+  ungroup()
+
+
+
+summaryf %>% 
+  ggplot(aes(rater_mean, red_card_ratio)) + 
+  geom_point()
+
+summaryf %>% 
+  ggplot(aes(rater_mean, yellow_card_ratio)) + 
+  geom_point() 
+  
+
 ggplot(dataf) + 
   geom_bar(aes(x = redCards))
 ggplot(dataf) + 
   geom_bar(aes(x = yellowCards))
+dataf 
+ggplot(dataf) + 
+  geom_bar(aes(x = yellowCards))
+
+
+
