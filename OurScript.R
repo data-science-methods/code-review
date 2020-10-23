@@ -93,8 +93,50 @@ plt_point + facet_wrap(vars(leagueCountry)) +
 #' The plots look very similar between countries, almost identical (except for a few observations)...
 
 
+## Diving into the data ----
+
+#' Let's look at the number of yellowCards, yellowReds, redCards given by each country
+
+## Number of Yellow cards by country league:
+Tot_Yel_Crd <- soccer_data %>% 
+  group_by(leagueCountry) %>% 
+  summarize(total_Ycard = sum(yellowCards)) %>% 
+  ungroup
+
+Tot_Yel_Crd 
+#' It appears that the Spanish league has the highest number of yellow cards given
 
 
+## Number of Yellow-Red cards by country league:
+Tot_YelRed_Crd <- soccer_data %>% 
+  group_by(leagueCountry) %>% 
+  summarize(total_YRcard = sum(yellowReds)) %>% 
+  ungroup
+
+Tot_YelRed_Crd 
+#' It also appears that the Spanish league has a higher number of yellow cards leading to a red given. 
+#' But given the total number of games played this is not really different
+
+
+## Number of Red cards by country league:
+Tot_Red_Crd <- soccer_data %>% 
+  group_by(leagueCountry) %>% 
+  summarize(total_Rcard = sum(redCards)) %>% 
+  ungroup
+
+Tot_Red_Crd 
+#' The Spanish league has also the highest number of red cards given
+
+Tot_Crd <- soccer_data %>% 
+  group_by(leagueCountry) %>% 
+  summarize(total_card = sum(yellowCards,yellowReds, redCards)) 
+  ungroup
+
+Tot_Crd
+#' With the surprise the Spanish league gave out the highest numbers of cards
+
+
+## Other type of analysis (incomplete) ----
 soccer_data %>% 
   select(meanIAT,meanExp) %>% 
   vis_cor()
