@@ -21,7 +21,7 @@ skim(soccer_data)
 
 ## Visualization of missing data
 # vis_miss(soccer_data,
-         # warn_large_data = FALSE)
+#          warn_large_data = FALSE)
 #' This is commented out because it takes a long time to run. Run at your own risk. :)
 
 ## Visualization of smaller dataset
@@ -44,8 +44,8 @@ plt_viol <- ggplot(data = soccer_data,
             geom_violin() +
             labs(title = "Mean Implicit Bias Score by Country League",
                  subtitle = "IAT scores for referrees' country of origin",
-                 y = "Mean IAT Score",
-                 x = "European League Country")
+                 x = "European League Country",
+                 y = "Mean IAT Score")
 
 plt_viol + theme(axis.text = element_text(size = 12),
                  axis.title = element_text(size = 14,
@@ -80,8 +80,8 @@ plt_point <- ggplot(data = soccer_data,
              geom_point() +
              labs(title = "Mean Implicit Bias Score Vs Mean Explicit Bias Score",
                   subtitle = "IAT and racial thermometer scores for referrees' country of origin",
-                  y = "Mean Racial Thermometer Score",
-                  x = "Mean IAT Score")
+                  x = "Mean IAT Score",
+                  y = "Mean Racial Thermometer Score")
 
 plt_point + theme(axis.text = element_text(size = 12),
                   axis.title = element_text(size = 14,
@@ -128,11 +128,11 @@ Tot_Red_Crd <- soccer_data %>%
                   ungroup()
 
 Tot_Red_Crd 
-#' The Spanish league has also the highest number of red cards given
+#' The Spanish league has also the highest number of red cards given (shortly followed by England with only 3 less given)
 
 Tot_Crd <- soccer_data %>% 
               group_by(leagueCountry) %>% 
-              summarize(total_card = sum(yellowCards,yellowReds, redCards)) 
+              summarize(total_card = sum(yellowCards,yellowReds, redCards)) %>% 
               ungroup()
 
 Tot_Crd
@@ -140,51 +140,50 @@ Tot_Crd
 
 
 ## ANOVA ----
-#' Run a quick anova
+## Run a quick anova
 res.aov <- aov(redCards ~ leagueCountry, data = soccer_data)
 summary(res.aov)
 
-#' Run quick post hoc
+## Run quick post hoc
 TukeyHSD(res.aov)
 
-#' Based on our ANOVA, there are significant differences between France & England, Germany & England,
+#' Based on our ANOVA, there are significant differences in means for red cards between France & England, Germany & England,
 #' Spain & England, Germany & France, and Spain & Germany. However, there isn't a significant difference between Spain & France.
 #' This is consistent with conventional beliefs about the soccer cultures in Spain and France.
 
 
-## Other types of analysis----
+## Other types of analysis ----
 
-# Number of player in the different leagues that have been identified as mostly dark-skinned by both raters
+## Number of player in the different leagues that have been identified as mostly dark-skinned by both raters
 soccer_data %>% 
   group_by(leagueCountry) %>% 
   filter(rater1 > .5 & rater2 > .5) %>% 
   count() %>% 
-  ungroup
-
+  ungroup()
   
-# Number of player in the different leagues that have been identified as mostly light-skinned by both raters  
+## Number of player in the different leagues that have been identified as mostly light-skinned by both raters  
   
 soccer_data %>% 
   group_by(leagueCountry) %>% 
   filter(rater1 <= .5 & rater2 <= .5) %>% 
   count() %>% 
-  ungroup
+  ungroup()
 
-# Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters    
+## Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters    
  
   soccer_data %>% 
     group_by(leagueCountry) %>% 
     filter(rater1 > .5 & rater2 > .5) %>% 
     summarize(total_card = sum(redCards)) %>% 
-    ungroup   
+    ungroup()
  
-# Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters  
+## Number of Red cards in the different leagues received by players who have been rated dark-skinned by both raters  
   
   soccer_data %>% 
     group_by(leagueCountry) %>% 
     filter(rater1 <= .5 & rater2 <= .5) %>% 
     summarize(total_card = sum(redCards)) %>% 
-    ungroup
+    ungroup()
   
 #' From these is seems that light skinned and dark-skinned player are affected similarly by red cards (i.e. in 
 #' identical proportion)
